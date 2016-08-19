@@ -1,7 +1,7 @@
 
 extends Node2D
 
-var CHAR_SCENE = ResourceLoader.load("res://Scenes/CombatScene/ExampleChar.scn")
+var CHAR_SCENE = ResourceLoader.load("res://Scenes/CombatScene/ExampleEnemyChar.scn")
 
 func _ready():
 	randomize()
@@ -13,7 +13,7 @@ func _ready():
 		var positioned = false
 		var newpos = null
 		while !positioned :
-			newpos = Vector2(randi()%6,randi()%6)
+			newpos = Vector2(7+randi()%6,randi()%6)
 			positioned = true
 			for kid in self.get_children():
 				if newpos == kid.get_grid_pos() :
@@ -22,3 +22,4 @@ func _ready():
 		s.set_grid_pos(newpos)
 		
 	print(nchar," character have been generated")
+

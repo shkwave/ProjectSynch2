@@ -3,8 +3,8 @@ extends Node2D
 
 var TERRAIN 
 
-var IDLE_TEXTURE = ResourceLoader.load("res://Textures/Characters/blueplayer.tex")
-var ACTIVE_TEXTURE = ResourceLoader.load("res://Textures/Characters/cyanplayer.tex")
+var IDLE_TEXTURE = ResourceLoader.load("res://Textures/Characters/redplayer.tex")
+var ACTIVE_TEXTURE = ResourceLoader.load("res://Textures/Characters/magentaplayer.tex")
 
 var CHAR_STATE
 var CHAR_POSSIBLE_STATES = ["IDLE","ACTIVE"]
