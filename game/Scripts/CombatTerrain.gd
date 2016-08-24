@@ -4,12 +4,14 @@ extends Sprite
 var mapsize = {}
 var ncol = 20
 var nrow = 20
-var cellsize = 50
+var cellsize = 40
 var base_terrain_map = {}
+var grid_offset = Vector2(100,0)
 
 func _ready():
 	mapsize["width"] = self.get_texture().get_size().width*self.get_scale().x
 	mapsize["height"] = self.get_texture().get_size().height*self.get_scale().y
+	self.set_pos(grid_offset+Vector2(mapsize["width"]/2,mapsize["height"]/2))
 	terrain_map_init()
 
 #===========================================================================================
@@ -17,12 +19,17 @@ func _ready():
 #===========================================================================================
 func global2grid_coord(pos):
 	## Note: pos must be a Vector2 of global coordinates
-	return Vector2(int(pos[1]/cellsize),int(pos[0]/cellsize))
+	return Vector2(int((pos[1]-grid_offset[1])/cellsize),int((pos[0]-grid_offset[0])/cellsize))
 
 func grid2global_coord(grid_pos):
 	## Note : this function must be further modified, currently the local position with respect 
-	## to the terrain is retrieved, however I am interested in the global position 
-	return Vector2((grid_pos[1]+0.5)*cellsize,(grid_pos[0]+0.5)*cellsize)
+	## to the terrain is retrieved, however I am interested in the global position
+	#### Note2 : This might not be an issue, the terrain is locked in the global system of coordinates, 
+	#### therefore, provided that global coordinates are specified and the grid_offset is set up correctly,
+	#### the following call will provide the correct coordinates. The coordinates in the viewport are not the
+	#### global coordinates, only the mouse will provide the viewport coordinates but they can be easily converted
+	#### through the use of 
+	return Vector2((grid_pos[1]+0.5)*cellsize,(grid_pos[0]+0.5)*cellsize)+grid_offset
 
 #===========================================================================================
 # Functions used to initialize and retrieve the terrain map

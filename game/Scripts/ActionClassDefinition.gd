@@ -2,6 +2,7 @@ extends Node
 
 class Action:
 	extends Node
+	var ROOT
 	var Target
 	var ExecTurn
 	var Sender
@@ -28,17 +29,19 @@ class MoveAction:
 	var AoE
 	
 	func setup(Char):
+		ROOT = Char.get_tree().get_root()
 		Sender = Char
 		AoE = Vector2Array()
 		AoE.push_back(Vector2(0,0))
-		ExecTurn = Char.get_node("/root/globals").get_current_turn()
+		ExecTurn = ROOT.get_node("globals").get_current_turn()
+		ExecTurn = ExecTurn + ExecTurn%2
 		global_selectable_area = Char.get_walkable_area()
-		Char.get_node("/root/World/HUD").set_target_request(self)
+		ROOT.get_node("World/HUD").set_target_request(self)
 	
 	func accept_reply(reply):
-		self.Target = reply
-		Sender.get_node("/root/World/MessageManager").add_action(self)
-		Sender.get_node("/root/World").change_state("Action_Execution")
+		Target = reply
+		ROOT.get_node("World/MessageManager").add_action(self)
+		ROOT.get_node("World").change_state("Action_Execution")
 	
 	func execute():
 		Sender.set_grid_pos(Target)
