@@ -9,17 +9,16 @@ var ACTIVE_TEXTURE = ResourceLoader.load("res://Textures/Characters/cyanplayer.t
 var CHAR_STATE
 var CHAR_POSSIBLE_STATES = ["IDLE","ACTIVE"]
 var CHAR_AVAIL_ACTIONS = ["Move","Attack","Magic","Use"]
-var ATTACK_OPTIONS = ["Attack","Attack2","Attack3","Attack4","Attack5","Attack6"]
+var ATTACK_OPTIONS = ["Standard Attack","Sweep","Pierce","HammerDown"]
 var MAGIC_OPTIONS = ["Magic1","Magic2"]
-var grid_pos setget get_grid_pos,set_grid_pos
+var grid_pos setget set_grid_pos,get_grid_pos
 var stamina = 4
 
 func _ready():
 	TERRAIN = get_tree().get_root().get_node("World/Terrain")
 	get_node("Sprite").set_texture(IDLE_TEXTURE)
 	CHAR_STATE = "IDLE"
-	grid_pos = Vector2(1,1)
-	set_process(true)
+	#set_process(true)
 
 #-------------------------------------------------------------------------------------------------------
 # FINITE STATE MACHINE HANDLING - CHANGE STATE HANDLING
@@ -50,9 +49,7 @@ func on_state_enter(newstate):
 
 
 func on_state_exit(oldstate):
-	
-	if (oldstate == "ACTIVE"):
-		pass
+	pass
 	
 
 #-------------------------------------------------------------------------------------------------------

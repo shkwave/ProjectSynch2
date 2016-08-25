@@ -12,4 +12,3 @@ func process():
 		if (action.ExecTurn == currentTurn) :
 			action.execute()
 
-
