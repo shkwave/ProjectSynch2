@@ -9,7 +9,7 @@ var ACTIVE_TEXTURE = ResourceLoader.load("res://Textures/Characters/cyanplayer.t
 var CHAR_STATE
 var CHAR_POSSIBLE_STATES = ["IDLE","ACTIVE"]
 var CHAR_AVAIL_ACTIONS = ["Move","Attack","Magic","Use"]
-var ATTACK_OPTIONS = ["Attack","Attack2","Attack3","Attack4","Attack5","Attack6"]
+var ATTACK_OPTIONS = ["Standard Attack","Sweep","Pierce","HammerDown"]
 var MAGIC_OPTIONS = ["Magic1","Magic2"]
 var grid_pos setget set_grid_pos,get_grid_pos
 var stamina = 4

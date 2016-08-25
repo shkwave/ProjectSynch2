@@ -70,6 +70,8 @@ func _draw():
 				draw_rect(Rect2(TERRAIN.grid2global_coord(tile)-rectsize/2,rectsize),Color(1,0,0,0.3))
 		if (ActSelReq.flag == 2):
 			var rectsize = Vector2(30,30)
+			if (ActSelReq.requesting_action.AoE_rotate):
+				ActSelReq.requesting_action.AoE_update(ActSelReq.reply)
 			for tile in ActSelReq.requesting_action.AoE:
 				draw_rect(Rect2(TERRAIN.grid2global_coord(tile+ActSelReq.reply)-rectsize/2,rectsize),Color(0,1,1,0.9))
 
@@ -82,7 +84,6 @@ func set_target_request(action):
 	WORLD.change_state("Action_Specifics")
 	ActSelReq.flag = 1
 	ActSelReq.requesting_action = action
-	ActSelReq.AoE = action.AoE
 	update()
 
 

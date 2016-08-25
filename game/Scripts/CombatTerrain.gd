@@ -30,6 +30,15 @@ func grid2global_coord(grid_pos):
 	#### global coordinates, only the mouse will provide the viewport coordinates but they can be easily converted
 	#### through the use of 
 	return Vector2((grid_pos[1]+0.5)*cellsize,(grid_pos[0]+0.5)*cellsize)+grid_offset
+	
+#===========================================================================================
+# Check if the input is a tile of the map
+#===========================================================================================
+func is_available_tile(tile):
+	if (tile.x >= 0 and tile.x < ncol and tile.y >= 0 and tile.y <nrow):
+		return true
+	else:
+		return false
 
 #===========================================================================================
 # Functions used to initialize and retrieve the terrain map

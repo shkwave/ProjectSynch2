@@ -58,13 +58,13 @@ func on_state_enter(state):
 	if (state == "Action_Specifics"):
 		HUD.set_size(WORLD_SIZE)
 	if (state == "Action_Execution"):
-		get_node("MessageManager").process()
 		if ACTIVE_PLAYER == "Player1":
 			ACTIVE_PLAYER = "Player2"
 		elif ACTIVE_PLAYER == "Player2":
+			get_node("MessageManager").process()
 			ACTIVE_PLAYER = "Player1"
-		get_node("/root/globals").currentTurn += 1
-		print(get_node("/root/globals").currentTurn)
+			get_node("/root/globals").currentTurn += 1
+			print(get_node("/root/globals").currentTurn)
 		change_state("Char_Select")
 
 func get_state():
