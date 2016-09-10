@@ -1,7 +1,6 @@
 extends Node
 
 var currentTurn = 1
-var fake
 
 func matrix_init(nrow,ncol,fill):
 	var M = {}
