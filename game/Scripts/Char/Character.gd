@@ -19,14 +19,10 @@ var MAX_AP
 var MAX_HP
 var MAX_MP
 
+var show_state_change = false
 
 func _init():
-#	# associate sprites
-#	var sprite = Sprite.new()
-#	sprite.set_name("Sprite")
-#	self.add_child(sprite)
-
-	# Set current state to inactive
+	# Set current state to idle
 	CHAR_STATE = "IDLE"
 
 
@@ -43,42 +39,36 @@ func _ready():
 
 func change_state(newstate):
 	# check that newstate is in the list of possible states
-	if (_CHAR_STATES.find(newstate)>-1):
+	if _CHAR_STATES.find(newstate)==-1:
+		# HANDLE ERROR in State definition
+		print("Error in state handling, state ",newstate," does not exist.")
+		self.get_tree().quit()
+	else:
 		self.on_state_exit(self.CHAR_STATE)
-
-		# print("Changing state of ",self.get_name()," from ",self.CHAR_STATE," to ",newstate)
+		
+		if show_state_change:
+			print("Changing state of ",self.get_name()," from ",self.CHAR_STATE," to ",newstate)
 		CHAR_STATE = newstate
 
 		self.on_state_enter(newstate)
-	else:
-		print("Error in state handling, state ",newstate," does not exist.")
-		self.get_tree().quit()
 
 
 func on_state_enter(newstate):
 	# Method to be called when the FSM enters in a new state
 	if (newstate == "ACTIVE"):
-		update()
-	#	self.get_node("Sprite").set_texture(TEXTURE)
-
+		pass
 	if (newstate == "IDLE"):
 		self.reset_status()
-		update()
-		#self.get_node("Sprite").set_texture(TEXTURE)
-	
 	if (newstate == "DEAD"):
 		print(str(get_name(),' died'))
 		self.get_node("Sprite").set_texture(DEAD_TEXTURE)
-#			get_parent().ALIVE_CHILDREN.erase(self)
-#			print(get_parent().ALIVE_CHILDREN)
-
+	update()
 
 
 func on_state_exit(oldstate):
 	pass
 
 func _draw():
-#	print(CHAR_STATE)
 	if CHAR_STATE == "ACTIVE":
 		draw_circle(Vector2(0,0),12,Color(0,0,0,0.3))
 
@@ -103,6 +93,7 @@ func modify_HP(HPmod):
 	HP += HPmod
 	print(str("HP is: ",HP))
 	if HP < 1 :
+		HP = 0 # To avoid showing chars with negative HP
 		change_state("DEAD")
 
 func get_AP():
@@ -124,8 +115,8 @@ func get_MAX_MP():
 	return MAX_MP
 
 #=========================================================================================
-
-
+# MANAGE ACTIONS
+#=========================================================================================
 func get_avail_actions():
 	return AVAIL_ACTIONS
 
@@ -135,12 +126,9 @@ func get_walkable_area():
 	var walkable = {}
 	walkable.cell = []
 	walkable.AP_cost = []
-	# retrieve the terrain map
-	# var terrain_map = TERRAIN.get_terrain_map()
-	# initialize the map of stamina consumption as unwalkable (AP+1)
-	# var walkmap = get_node("/root/globals").matrix_init(TERRAIN.nrow,TERRAIN.ncol,self.AP+1)
-	# move to the current position (not moving) imply no stamina consumption...
+	
 	var walkmap = {}
+	# move to the current position (not moving) imply no stamina consumption...
 	walkmap[get_grid_pos()] = 0
 	# ... and add current position to the walkable area
 	walkable.cell.append(get_grid_pos())

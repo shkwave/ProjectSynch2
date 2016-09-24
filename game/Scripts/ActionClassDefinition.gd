@@ -172,7 +172,7 @@ class StandardAttack:
 	
 	func _init(Char).(Char):
 		Damage = 1
-		AP_cost = 1
+		AP_cost = 0
 		AoE = Vector2Array([Vector2(0,0)])
 		relative_selectable_area = Vector2Array([Vector2(0,1),Vector2(0,-1),Vector2(1,0),Vector2(-1,0)])
 

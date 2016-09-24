@@ -17,6 +17,9 @@ func matrix_init(nrow,ncol,fill):
 func get_current_turn():
 	return currentTurn
 
+func next_turn_start():
+	currentTurn += 1
+
 func setScene(scene):
 	currentScene.queue_free()
 	var s = ResourceLoader.load(scene)

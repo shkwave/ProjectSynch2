@@ -1,7 +1,7 @@
 
 extends Control
 
-onready var MenuList = { "MainMenu" : get_node("ActionSelectionMainMenu"),
+onready var MenuList = { "MainMenu" : get_node("CombatMainMenu"),
 	"ActionMenu" : get_node("ActionMenu")}
 onready var currentMenu = MenuList.MainMenu
 onready var currentmenupath = Array(["MainMenu"])
@@ -25,10 +25,10 @@ func menu_generate():
 func menu_load(menuname):
 	currentMenu.hide()
 	currentMenu = MenuList[menuname]
-	#if (menuname == "ActionMenu"):
-	#	MenuList.ActionMenu.menu_update()
 	currentMenu.show()
 	if currentmenupath[currentmenupath.size()-1]!=menuname:
 		currentmenupath.append(menuname)
 
 
+func actions_are_available():
+	MenuList.ActionMenu.actions_are_available()

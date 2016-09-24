@@ -4,7 +4,6 @@ onready var TERRAIN = get_tree().get_root().get_node("World/Terrain")
 
 func _ready():
 	set_process(true)
-	pass
 
 func _process(delta):
 	var mouse_pos = TERRAIN.world_to_map(get_global_mouse_pos())

@@ -10,11 +10,9 @@ func _ready():
 	for cell in get_used_cells():
 		if get_cellv(cell) == type0:
 			avail_cell.push_back(cell)
-	#print(avail_cell)
 			
 
 func is_available(cell):
-	#print(cell)
 	if find_elem_in(cell,avail_cell)<0:
 		return false
 	else:
@@ -43,11 +41,7 @@ func map_to_world_centered(grid_pos):
 	return pos + get_cell_size()/2
 
 func find_elem_in(value,arrayvector2):
-	#print(str("searching value",value))
-	#print(str("in ", arrayvector2))
-	#print(str("sizeof arrayvector2",arrayvector2.size()))
 	for indx in range(arrayvector2.size()):
-		#print(str("comparing",arrayvector2[indx],"with",value))
 		if (arrayvector2[indx] - value).length()<0.01:
 			return indx
 	return -1
