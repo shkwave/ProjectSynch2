@@ -7,9 +7,6 @@ onready var currentMenu = MenuList.MainMenu
 onready var currentmenupath = Array(["MainMenu"])
 	
 
-func _ready():
-	pass
-
 func menu_hide():
 	currentMenu.hide()
 
@@ -31,4 +28,4 @@ func menu_load(menuname):
 
 
 func actions_are_available():
-	MenuList.ActionMenu.actions_are_available()
+	return MenuList.ActionMenu.actions_are_available()

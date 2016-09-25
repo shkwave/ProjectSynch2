@@ -14,7 +14,7 @@ onready var CAMERA = get_node("Camera2D")
 
 var WORLD_SIZE = Vector2(2048,2000)
 
-var show_state_change = true
+var show_state_change = false
 
 func _ready():
 	ACTIVE_PLAYER = "Player1"
@@ -55,7 +55,7 @@ func on_state_exit(state):
 	if (state == "Action_Specifics"):
 		HUD.act_sel_req_reset()
 		HUD.set_size(Vector2(1,1))
-		HUD.update()
+		HUD.DRAWNODE.update()
 
 func on_state_enter(state):
 	if (state == "Char_Select"):
@@ -66,7 +66,7 @@ func on_state_enter(state):
 	if (state == "Action_Select"):
 		# Not yet sure when the camera should be moved
 		MENU.set_pos(ACTIVE_CHAR.get_pos())
-		if ACTIVE_CHAR.get_AP() == 0 and MENU.actions_are_available(): 
+		if ACTIVE_CHAR.get_AP() == 0 and not MENU.actions_are_available(): 
 			# if AP == 0 and the char hasn't got any free actions continue 
 			# with the turn without opening the menu
 			change_state("Action_Execution")

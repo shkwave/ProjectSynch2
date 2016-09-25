@@ -159,7 +159,7 @@ class SimpleAttackAction:
 				if tile == char.get_grid_pos():
 					#print(str(char.get_name()," has been attacked"))
 					#print(str("starting at ",char.get_HP()))
-					char.modify_HP(-Damage)
+					char.modify_HP(-Damage,Sender)
 					#print(str("Now HP at ",char.get_HP()))
 		Sender.reduce_AP(AP_cost)
 		ROOT.get_node("World").change_state("Action_Execution")
@@ -220,7 +220,7 @@ class Pierce:
 		for char in ROOT.get_tree().get_nodes_in_group("Characters"):
 			for tile in AoE:
 				if tile + Target == char.get_grid_pos():
-					char.modify_HP(-Damage)
+					char.modify_HP(-Damage,Sender)
 		Sender.reduce_AP(AP_cost)
 		Sender.set_grid_pos(Target)
 		ROOT.get_node("World").change_state("Action_Execution")

@@ -4,6 +4,7 @@ extends Control
 onready var TERRAIN = get_parent().get_node("Terrain")
 onready var WORLD = get_parent()
 onready var MENU = get_node("MenuSystem")
+onready var DRAWNODE = get_node("DrawingBoard")
 
 var ActSelReq = {}
 
@@ -37,7 +38,7 @@ func _unhandled_input(event):
 			elif (ActSelReq.flag == 2):
 				ActSelReq.flag -= 1
 				ActSelReq.reply = Vector2()
-				update()
+				DRAWNODE.update()
 				get_tree().set_input_as_handled()
 		#NEED TO ADD MORE
 
@@ -50,7 +51,7 @@ func _input(event):
 				if (ActSelReq.requesting_action.global_selectable_area.find(selected_pos)>-1):
 					ActSelReq.flag = 2
 					ActSelReq.reply = selected_pos
-					update()
+					DRAWNODE.update()
 			elif (ActSelReq.flag == 2):
 				get_tree().set_input_as_handled()
 				if (selected_pos == ActSelReq.reply):
@@ -58,7 +59,7 @@ func _input(event):
 					set_process(false)
 				elif (ActSelReq.requesting_action.global_selectable_area.find(selected_pos)>-1):
 					ActSelReq.reply = selected_pos
-					update()
+					DRAWNODE.update()
 
 func _process(delta):
 	var selected_pos = TERRAIN.world_to_map(get_global_mouse_pos())
@@ -66,25 +67,11 @@ func _process(delta):
 	if ActSelReq.requesting_action.global_selectable_area.find(selected_pos)>-1:
 		ActSelReq.draw_temp = true
 		ActSelReq.temp_reply = selected_pos
-	update()
-
-func _draw():
-	if (WORLD.get_state() == "Action_Specifics"):
-		if (ActSelReq.flag > 0):
-			var rectsize = Vector2(20,20)
-			for tile in ActSelReq.requesting_action.global_selectable_area:
-				draw_rect(Rect2(TERRAIN.map_to_world_centered(tile)-rectsize/2,rectsize),Color(1,0.816,0.1216,0.7))
-			if ActSelReq.draw_temp :
-				if (ActSelReq.requesting_action.AoE_rotate):
-					ActSelReq.requesting_action.AoE_update(ActSelReq.temp_reply)
-				for tile in ActSelReq.requesting_action.AoE:
-					draw_rect(Rect2(TERRAIN.map_to_world_centered(tile+ActSelReq.temp_reply)-rectsize/2,rectsize),Color(1,0.341,0.173,0.4))
-		if (ActSelReq.flag == 2):
-			var rectsize = Vector2(12,12)
-			if (ActSelReq.requesting_action.AoE_rotate):
-				ActSelReq.requesting_action.AoE_update(ActSelReq.reply)
-			for tile in ActSelReq.requesting_action.AoE:
-				draw_rect(Rect2(TERRAIN.map_to_world_centered(tile+ActSelReq.reply)-rectsize/2,rectsize),Color(0.91,0.11,0.478,1))
+	DRAWNODE.update()
+#
+#func _draw():
+# OLD _DRAW function has been moved inside Drawing Board so that the HUD
+# and the selectable areas etc. can be drawn on different levels 
 
 func act_sel_req_reset():
 	ActSelReq.flag = 0
@@ -99,7 +86,7 @@ func set_target_request(action):
 	ActSelReq.flag = 1
 	ActSelReq.requesting_action = action
 	set_process(true)
-	update()
+	DRAWNODE.update()
 
 
 

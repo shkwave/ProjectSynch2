@@ -12,15 +12,18 @@ func menu_generate(active_hero):
 		s.set_text(avail_actions[i])
 		s.set_name(avail_actions[i])
 		var linked_action = ActDef.createaction(avail_actions[i],ACTIVE_CHAR)
+		linked_action.set_name("action")
+		s.add_child(linked_action)
 		s.connect("pressed",linked_action,"setup")
 		if (ACTIVE_CHAR.get_AP() < linked_action.AP_cost):
 			s.set_disabled(true)
 		self.add_child(s)
 
-func menu_update():
-	for button in self.get_children():
-		if (get_tree().get_root().get_node("World").ACTIVE_CHAR.get_AP() < button.get_node("action").AP_cost):
-			button.set_disabled(true)
+#func menu_update():
+#	Obsolete function, will be necessary if multiple actions can be executed in 1 turn
+#	for button in self.get_children():
+#		if (get_tree().get_root().get_node("World").ACTIVE_CHAR.get_AP() < button.get_node("action").AP_cost):
+#			button.set_disabled(true)
 
 func actions_are_available():
 	for button in self.get_children():
