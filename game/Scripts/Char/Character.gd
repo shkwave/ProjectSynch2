@@ -11,13 +11,17 @@ var TEAM
 var CLASS_TYPE
 var TEXTURE
 var DEAD_TEXTURE
-var AVAIL_ACTIONS
 var AP
 var HP
 var MP
 var MAX_AP
 var MAX_HP
 var MAX_MP
+
+var last_killed = null
+var AVAIL_ACTIONS
+var STANDARD_ACTIONS
+var KILLED_Lancer_ACTIONS
 
 var show_state_change = false
 
@@ -88,13 +92,14 @@ func get_HP():
 func get_MAX_HP():
 	return MAX_HP
 
-func modify_HP(HPmod):
+func modify_HP(HPmod, Sender):
 	print(str("HP was: ",HP))
 	HP += HPmod
 	print(str("HP is: ",HP))
 	if HP < 1 :
 		HP = 0 # To avoid showing chars with negative HP
 		change_state("DEAD")
+		Sender.has_killed(CLASS_TYPE)
 
 func get_AP():
 	return AP
@@ -120,6 +125,13 @@ func get_MAX_MP():
 func get_avail_actions():
 	return AVAIL_ACTIONS
 
+func has_killed(killed_class_type):
+	last_killed = killed_class_type
+	var next_action_list = str("KILLED_",killed_class_type,"_ACTIONS")
+	if not next_action_list == null:
+		AVAIL_ACTIONS = get(next_action_list)
+	else:
+		print("Nothing defined for killing ",killed_class_type)
 
 func get_walkable_area():
 	# initialize the array which is going to contain the walkable cells

@@ -8,6 +8,7 @@ var ActiveCharIndx = 0
 func _ready():
 	ALIVE_CHILDREN = get_children()
 	ALIVE_CHILDREN = shuffle(ALIVE_CHILDREN)
+	
 
 
 func shuffle(list):
